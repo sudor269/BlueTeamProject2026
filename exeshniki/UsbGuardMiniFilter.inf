@@ -1,0 +1,51 @@
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = "ActivityMonitor"
+ClassGuid   = {b86dff51-a31e-4bac-b3cf-e8cfe75c9fc2}
+Provider    = %ManufacturerName%
+DriverVer = 02/24/2026,21.53.59.345
+CatalogFile = UsbGuardMiniFilter.cat
+PnpLockdown = 1
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+[DefaultInstall.NTamd64]
+OptionDesc = %ServiceDesc%
+CopyFiles  = DriverCopyFiles
+
+[DefaultInstall.NTamd64.Services]
+AddService = %ServiceName%,,ServiceInstall
+
+[DriverCopyFiles]
+UsbGuardMiniFilter.sys
+
+[ServiceInstall]
+DisplayName    = %ServiceDesc%
+Description    = %ServiceDesc%
+ServiceType    = 2
+StartType      = 3
+ErrorControl   = 1
+ServiceBinary  = %12%\UsbGuardMiniFilter.sys
+LoadOrderGroup = "FSFilter Activity Monitor"
+Dependencies   = FltMgr
+AddReg         = MiniFilter.AddRegistry
+
+[MiniFilter.AddRegistry]
+HKR,"Instances","DefaultInstance",0x00000000,%DefaultInstanceName%
+HKR,"Instances\"%DefaultInstanceName%,"Altitude",0x00000000,%Altitude%
+HKR,"Instances\"%DefaultInstanceName%,"Flags",0x00010001,0
+
+[SourceDisksNames]
+1 = %DiskName%,,,
+
+[SourceDisksFiles]
+UsbGuardMiniFilter.sys = 1
+
+[Strings]
+ManufacturerName    = "UsbGuard"
+ServiceDesc         = "USB Guard MiniFilter"
+ServiceName         = "UsbGuardMiniFilter"
+DefaultInstanceName = "UsbGuard Instance"
+Altitude            = "370030"
+DiskName            = "USB Guard Driver Installation Disk"
