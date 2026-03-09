@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>UsbGuard Admin</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>UsbGuard Admin</h1>
+
+  <div class="card">
+    <h2>Политика</h2>
+    <p><b>Версия:</b> {{ policy.version }}</p>
+    <form method="post" action="/policy/update">
+      <label>
+        <input type="checkbox" name="audit_only" {% if policy.audit_only %}checked{% endif %}>
+        Audit only (не блокировать)
+      </label><br>
+      <label>
+        <input type="checkbox" name="default_allow_if_no_serial" {% if policy.default_allow_if_no_serial %}checked{% endif %}>
+        Разрешать если серийник не прочитан
+      </label><br><br>
+      <button type="submit">Сохранить политику</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Хосты</h2>
+    <ul>
+      {% for h in hosts %}
+      <li>{{ h.hostname }} — {{ h.status }} — {{ h.last_seen }}</li>
+      {% else %}
+      <li>Нет данных</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Навигация</h2>
+    <p><a href="/devices">Устройства</a> | <a href="/events">События</a></p>
+  </div>
+
+  <div class="card">
+    <h2>Последние события</h2>
+    <ul>
+      {% for e in recent %}
+      <li>[{{ e.created_at }}] {{ e.action }} host={{ e.host }} hash={{ e.hash_hex }} reason={{ e.reason }}</li>
+      {% else %}
+      <li>Нет событий</li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>

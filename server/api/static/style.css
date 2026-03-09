@@ -1,0 +1,36 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 24px;
+  background: #f4f6f8;
+}
+h1 { margin-bottom: 16px; }
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  vertical-align: top;
+}
+th {
+  background: #f0f0f0;
+}
+input {
+  width: 420px;
+  padding: 6px;
+  margin-bottom: 8px;
+}
+button {
+  padding: 8px 12px;
+}
+code {
+  font-family: Consolas, monospace;
+}

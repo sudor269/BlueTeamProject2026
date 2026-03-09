@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: usbguard-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: usbguard
+      POSTGRES_USER: usbguard
+      POSTGRES_PASSWORD: usbguard
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d
+
+  api:
+    build: ./api
+    container_name: usbguard-api
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql+psycopg2://usbguard:usbguard@db:5432/usbguard
+      UVICORN_HOST: 0.0.0.0
+      UVICORN_PORT: 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api:/app
+
+volumes:
+  pgdata:

@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>UsbGuard Devices</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>Разрешённые устройства</h1>
+  <p><a href="/">← Назад</a></p>
+
+  <div class="card">
+    <h2>Добавить устройство</h2>
+    <form method="post" action="/devices/add">
+      <label>Hash (16 HEX):</label><br>
+      <input name="hash_hex" maxlength="16" required><br>
+      <label>Serial (опц.):</label><br>
+      <input name="serial_normalized"><br>
+      <label>Комментарий:</label><br>
+      <input name="comment"><br><br>
+      <button type="submit">Добавить</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Список</h2>
+    <table>
+      <tr>
+        <th>ID</th><th>HASH</th><th>Serial</th><th>Comment</th><th>Created</th><th></th>
+      </tr>
+      {% for d in devices %}
+      <tr>
+        <td>{{ d.id }}</td>
+        <td><code>{{ d.hash_hex }}</code></td>
+        <td>{{ d.serial_normalized or "" }}</td>
+        <td>{{ d.comment or "" }}</td>
+        <td>{{ d.created_at }}</td>
+        <td>
+          <form method="post" action="/devices/delete/{{ d.id }}" onsubmit="return confirm('Удалить?');">
+            <button type="submit">Удалить</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6">Нет устройств</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+</html>

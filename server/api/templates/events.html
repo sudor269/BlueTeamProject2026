@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>UsbGuard Events</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>События</h1>
+  <p><a href="/">← Назад</a></p>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th>ID</th><th>Time</th><th>Host</th><th>Action</th><th>Reason</th><th>Hash</th><th>Serial</th>
+      </tr>
+      {% for e in events %}
+      <tr>
+        <td>{{ e.id }}</td>
+        <td>{{ e.created_at }}</td>
+        <td>{{ e.host or "" }}</td>
+        <td>{{ e.action }}</td>
+        <td>{{ e.reason or "" }}</td>
+        <td>{{ e.hash_hex or "" }}</td>
+        <td>{{ e.serial_normalized or "" }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7">Нет событий</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+</html>
